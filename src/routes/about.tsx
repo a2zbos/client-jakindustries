@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { Compass, Eye, Gem, Target } from "lucide-react";
-import workshop from "@/assets/workshop.jpg";
 import { PageHero } from "@/components/site/PageHero";
 import { Counter, Reveal, SectionLabel, SplitText, TiltCard, WipeImage } from "@/components/site/motion";
 import { CTA, ScrollHighlight, TextMarquee } from "@/components/site/sections";
@@ -10,16 +9,22 @@ import { QUALITY_OBJECTIVES, TEAM, UNITS, VALUES } from "@/lib/site-data";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About JAK Industries — Heavy Fabrication Since 2004" },
+      { title: "About JAK Industries | Heavy Fabrication Since 2004" },
       {
         name: "description",
         content: "The story, mission, values, four manufacturing units and leadership team behind JAK Industries, Chennai.",
       },
       { property: "og:title", content: "About JAK Industries" },
-      { property: "og:description", content: "Two decades of heavy fabrication for wind energy and pollution control." },
+      { property: "og:description", content: "22 years of heavy fabrication for wind energy and pollution control." },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://jakindustries.net/about" },
+      { property: "og:image", content: "https://jakindustries.net/og-image.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { name: "twitter:image", content: "https://jakindustries.net/og-image.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://jakindustries.net/about" }],
   }),
   component: About,
 });
@@ -33,7 +38,7 @@ function About() {
         eyebrow="About us · Since 2004"
         title="Built from a single shop floor"
         intro="JAK Industries began in 2004 as a small fabrication unit and grew into a key supplier of critical components to major wind firms and pollution control consultants in India."
-        image={workshop}
+        image={"/jak/slides/s3.jpg"}
       />
 
       <section className="mx-auto grid max-w-[1440px] gap-16 px-5 py-28 md:grid-cols-12 md:px-10 md:py-36">
@@ -41,11 +46,11 @@ function About() {
           <SectionLabel index="01">Our story</SectionLabel>
           <ScrollHighlight
             className="mt-10 font-display text-3xl font-medium leading-[1.2] tracking-tight md:text-4xl"
-            text="We fabricate, machine and assemble heavy structures, sheet metal, pollution control equipment, piping and tanks — then erect, commission and test them on site."
+            text="We fabricate, machine and assemble heavy structures, sheet metal, pollution control equipment, piping and tanks, then erect, commission and test them on site."
           />
           <Reveal delay={0.1}>
             <p className="mt-10 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-              Led by professionals with over 44 years in heavy structural fabrication, we work in carbon steel,
+              Led by professionals with 40 years of expertise in heavy structural fabrication, we work in carbon steel,
               stainless steel and aluminium. Our motto, “Strive for customer delight”, has earned us a reputation for
               delivering the right quality inside the agreed time frame.
             </p>
@@ -61,7 +66,7 @@ function About() {
       <section className="mx-auto max-w-[1440px] px-5 pb-28 md:px-10">
         <div className="grid gap-6 md:grid-cols-3">
           {[
-            { icon: Target, title: "Mission", body: "To exceed customer expectations in quality, delivery and cost through continual improvement and close customer interaction — and be the preferred choice across India." },
+            { icon: Target, title: "Mission", body: "To exceed customer expectations in quality, delivery and cost through continual improvement and close customer interaction, and to be the preferred choice across India." },
             { icon: Eye, title: "Vision", body: "To be the most successful, leading fabrication company in India." },
             { icon: Compass, title: "Quality policy", body: "We satisfy customers by supplying quality products at the right time, through continual improvement and the involvement of every employee." },
           ].map((c, i) => (
@@ -153,7 +158,7 @@ function About() {
             <Reveal key={m.name} delay={i * 0.1}>
               <TiltCard className="group overflow-hidden rounded-3xl border border-border bg-card" max={12}>
                 <div className="aspect-[4/5] overflow-hidden">
-                  <img src={m.photo} alt={m.name} loading="lazy" className="h-full w-full object-cover grayscale transition duration-700 group-hover:scale-105 group-hover:grayscale-0" />
+                  <img src={m.photo} alt={m.name} loading="lazy" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
                 </div>
                 <div className="p-5" style={{ transform: "translateZ(30px)" }}>
                   <div className="font-display text-lg font-semibold">{m.name}</div>
@@ -165,7 +170,7 @@ function About() {
         </div>
       </section>
 
-      <CTA title="Twenty years in. Just getting started." kicker="Work with us" />
+      <CTA title="22 years in. Just getting started." kicker="Work with us" />
     </>
   );
 }

@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import windfarm from "@/assets/windfarm.jpg";
 import { PageHero } from "@/components/site/PageHero";
 import { SectionLabel, SplitText, TiltCard } from "@/components/site/motion";
 import { ClientMarquee, CTA } from "@/components/site/sections";
@@ -9,16 +8,22 @@ import { CLIENTS } from "@/lib/site-data";
 export const Route = createFileRoute("/customers")({
   head: () => ({
     meta: [
-      { title: "Customers — Vestas, Siemens Gamesa, Nordex & more | JAK Industries" },
+      { title: "Customers | Vestas, Vayona, Nordex & more | JAK Industries" },
       {
         name: "description",
-        content: "JAK Industries supplies Vestas, Siemens Gamesa, Nordex, Enercon, TPI Composites, Wheels India, CUMI and other industry leaders.",
+        content: "JAK Industries supplies Vestas, Vayona Energy, Nordex, Enercon, TPI Composites, Wheels India, CUMI and other industry leaders.",
       },
       { property: "og:title", content: "JAK Industries Customers" },
       { property: "og:description", content: "The wind and industrial leaders who rely on JAK Industries." },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://jakindustries.net/customers" },
+      { property: "og:image", content: "https://jakindustries.net/og-image.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { name: "twitter:image", content: "https://jakindustries.net/og-image.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://jakindustries.net/customers" }],
   }),
   component: Customers,
 });
@@ -29,12 +34,12 @@ function Customers() {
       <PageHero
         eyebrow="Customers"
         title="The leaders who build with us"
-        intro="From global turbine makers to India's industrial champions — fifteen partners who trust JAK with critical parts."
-        image={windfarm}
+        intro="From global turbine makers to India's industrial champions: seventeen partners who trust JAK with critical parts."
+        image={"/jak/slides/s3.jpg"}
       />
       <section className="mx-auto max-w-[1440px] px-5 py-28 md:px-10">
         <SectionLabel index="01">Our customers</SectionLabel>
-        <SplitText as="h2" text="Fifteen partners and counting" className="mt-6 block text-4xl font-semibold md:text-6xl" />
+        <SplitText as="h2" text="Seventeen partners and counting" className="mt-6 block text-4xl font-semibold md:text-6xl" />
         <div className="mt-14 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
           {CLIENTS.map((c, i) => (
             <motion.div

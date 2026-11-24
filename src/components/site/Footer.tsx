@@ -16,10 +16,10 @@ export function Footer() {
       <div className="relative mx-auto max-w-[1440px] px-5 pb-10 pt-20 md:px-10">
         <div className="grid gap-12 md:grid-cols-12">
           <div className="md:col-span-5">
-            <img src="/jak/logo-footer.png" alt="JAK Industries and LADCO" className="h-20 w-auto" />
+            <img src="/jak/logo-footer.png" alt="JAK Industries and LADCO" className="h-20 w-auto invert dark:invert-0" />
             <p className="mt-6 max-w-md text-sm leading-relaxed text-muted-foreground">
-              Heavy fabrication in carbon steel, stainless steel and aluminium since 2004 — led by a team with
-              over 44 years of experience in heavy structural work.
+              Heavy fabrication in carbon steel, stainless steel and aluminium since 2004, led by a team with
+              40 years of experience in heavy structural work.
             </p>
             <Link
               to="/contact"
@@ -61,7 +61,13 @@ export function Footer() {
 
         <div className="mt-6 flex flex-col justify-between gap-2 border-t border-border pt-6 text-xs text-muted-foreground md:flex-row">
           <span>© {new Date().getFullYear()} JAK Industries. All rights reserved.</span>
-          <span className="font-mono">ISO 9001:2015 · ISO 14001:2015 · ISO 45001:2018</span>
+          <span className="font-mono">ISO 9001:2015 · ISO 14001:2015 · ISO 45001:2018 · ISO 3834-2:2021</span>
+          <span>
+            Website developed and managed by{" "}
+            <a href="https://www.a2zbos.com" target="_blank" rel="noopener" className="font-medium text-foreground underline underline-offset-4 transition-colors hover:text-primary">
+              A2ZBOS
+            </a>
+          </span>
         </div>
       </div>
     </footer>

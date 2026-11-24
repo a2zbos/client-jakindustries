@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import galvanizing from "@/assets/galvanizing.jpg";
 import { PageHero } from "@/components/site/PageHero";
-import { ParallaxImage, Reveal, SectionLabel, SplitText, TiltCard, WipeImage } from "@/components/site/motion";
+import { Reveal, SectionLabel, SplitText, TiltCard, WipeImage } from "@/components/site/motion";
 import { CTA } from "@/components/site/sections";
 import { Lightbox } from "@/components/site/Lightbox";
 import { LADCO_CERTS } from "@/lib/site-data";
@@ -11,16 +11,22 @@ import { LADCO_CERTS } from "@/lib/site-data";
 export const Route = createFileRoute("/ladco")({
   head: () => ({
     meta: [
-      { title: "LADCO Galvanizers — Hot-Dip Galvanizing | JAK Industries" },
+      { title: "LADCO Galvanizers | Hot-Dip Galvanizing | JAK Industries" },
       {
         name: "description",
         content: "LADCO Galvanizers Pvt. Ltd.: one-stop hot-dip galvanizing with an 8.6 m × 1.0 m × 1.6 m zinc bath and in-house effluent treatment.",
       },
-      { property: "og:title", content: "LADCO Galvanizers — Hot-Dip Galvanizing" },
+      { property: "og:title", content: "LADCO Galvanizers | Hot-Dip Galvanizing" },
       { property: "og:description", content: "One-stop hot-dip galvanizing with an 8.6 m zinc bath." },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://jakindustries.net/ladco" },
+      { property: "og:image", content: "https://jakindustries.net/og-image.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { name: "twitter:image", content: "https://jakindustries.net/og-image.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://jakindustries.net/ladco" }],
   }),
   component: Ladco,
 });
@@ -63,19 +69,19 @@ function ZincBath() {
 
 function Ladco() {
   const [open, setOpen] = useState<number | null>(null);
-  const items = LADCO_CERTS.map((c) => ({ src: c.image, caption: `${c.code} — ${c.title}` }));
+  const items = LADCO_CERTS.map((c) => ({ src: c.image, caption: `${c.code}: ${c.title}` }));
   return (
     <>
       <PageHero
         eyebrow="LADCO Galvanizers Pvt. Ltd."
         title="One-stop solution for hot-dip galvanizing"
-        intro="Our sister company protects steel for a lifetime — dipping fabricated structures in molten zinc, with a treatment plant that keeps the process clean."
+        intro="Our sister company protects steel for a lifetime, dipping fabricated structures in molten zinc, with a treatment plant that keeps the process clean."
         image={galvanizing}
       >
         <motion.img
           src="/jak/logo-ladco-white.png"
           alt="LADCO logo"
-          className="mt-10 h-16 w-auto"
+          className="mt-10 h-16 w-auto invert dark:invert-0"
           initial={{ opacity: 0, rotateY: 90 }}
           animate={{ opacity: 1, rotateY: 0 }}
           transition={{ duration: 1.2, delay: 1.2 }}
@@ -112,7 +118,9 @@ function Ladco() {
                 environment's expense.
               </p>
             </Reveal>
-            <ParallaxImage src="/jak/ladco/plantpic.jpg" alt="Effluent treatment plant layout" className="mt-8 aspect-[16/9] rounded-3xl bg-paper" imgClassName="object-contain" amount={4} />
+            <Reveal delay={0.2}>
+              <img src="/jak/ladco/etp-animation.svg" alt="LADCO effluent treatment plant: process flow from raw effluent inlet to RO permeate tank and solar evaporation pond" loading="lazy" width={1400} height={640} className="mt-8 w-full rounded-3xl border border-border" />
+            </Reveal>
           </div>
         </div>
       </section>

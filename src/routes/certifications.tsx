@@ -2,7 +2,6 @@ import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { FileCheck2 } from "lucide-react";
-import workshop from "@/assets/workshop.jpg";
 import { PageHero } from "@/components/site/PageHero";
 import { Reveal, SectionLabel, SplitText } from "@/components/site/motion";
 import { CTA } from "@/components/site/sections";
@@ -12,16 +11,22 @@ import { ISO_CERTS, LADCO_CERTS, WPS } from "@/lib/site-data";
 export const Route = createFileRoute("/certifications")({
   head: () => ({
     meta: [
-      { title: "Certifications — ISO 9001, 14001, 45001 & WPS | JAK Industries" },
+      { title: "Certifications | ISO 9001, 14001, 45001, 3834-2 | JAK Industries" },
       {
         name: "description",
-        content: "JAK Industries holds ISO 9001:2015, ISO 14001:2015 and ISO 45001:2018 certification plus 10 qualified welding procedure specifications.",
+        content: "JAK Industries holds ISO 9001:2015, ISO 14001:2015, ISO 45001:2018 and ISO 3834-2:2021 welding certification plus 10 qualified welding procedure specifications.",
       },
       { property: "og:title", content: "JAK Industries Certifications" },
-      { property: "og:description", content: "ISO 9001, 14001 and 45001 certified with 10 qualified WPS." },
+      { property: "og:description", content: "ISO 9001, 14001, 45001 and 3834-2 certified with 10 qualified WPS." },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://jakindustries.net/certifications" },
+      { property: "og:image", content: "https://jakindustries.net/og-image.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { name: "twitter:image", content: "https://jakindustries.net/og-image.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://jakindustries.net/certifications" }],
   }),
   component: Certifications,
 });
@@ -55,13 +60,13 @@ function Certifications() {
       <PageHero
         eyebrow="Certifications"
         title="Quality you can audit"
-        intro="Independently certified for quality, environment and occupational health & safety — with qualified welding procedures for every critical joint."
-        image={workshop}
+        intro="Independently certified for quality, environment, occupational health & safety and welding quality, with qualified welding procedures for every critical joint."
+        image={"/jak/slides/slide-1.jpg"}
       />
 
       <section className="mx-auto max-w-[1440px] px-5 py-28 md:px-10">
         <SectionLabel index="01">ISO certificates</SectionLabel>
-        <SplitText as="h2" text="Certified by BQC Assessment" className="mt-6 block text-4xl font-semibold md:text-6xl" />
+        <SplitText as="h2" text="Certified by KVQA and Intertek" className="mt-6 block text-4xl font-semibold md:text-6xl" />
         <p className="mt-4 text-sm text-muted-foreground">Hover to flip · click to open</p>
         <div className="mt-14 grid gap-8 md:grid-cols-3">
           {ISO_CERTS.map((c, i) => (
@@ -112,8 +117,8 @@ function Certifications() {
         </div>
       </section>
 
-      <Lightbox items={ISO_CERTS.map((c) => ({ src: c.image, caption: `${c.code} — ${c.title}` }))} index={isoOpen} onChange={setIsoOpen} group="iso" />
-      <Lightbox items={LADCO_CERTS.map((c) => ({ src: c.image, caption: `${c.code} — ${c.title}` }))} index={ladcoOpen} onChange={setLadcoOpen} group="ladcocert" />
+      <Lightbox items={ISO_CERTS.map((c) => ({ src: c.image, caption: `${c.code}: ${c.title}` }))} index={isoOpen} onChange={setIsoOpen} group="iso" />
+      <Lightbox items={LADCO_CERTS.map((c) => ({ src: c.image, caption: `${c.code}: ${c.title}` }))} index={ladcoOpen} onChange={setLadcoOpen} group="ladcocert" />
       <CTA title="Certified quality, on every order." kicker="Audit-ready" />
     </>
   );

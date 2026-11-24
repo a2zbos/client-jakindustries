@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
-import { Menu, X, ArrowUpRight } from "lucide-react";
+import { Menu, X, ArrowUpRight, Sun, Moon } from "lucide-react";
 import { NAV, CONTACT } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
 
@@ -34,7 +34,7 @@ export function Header() {
       >
         <div className="mx-auto flex h-20 max-w-[1440px] items-center justify-between px-5 md:px-10">
           <Link to="/" className="group flex items-center gap-3" aria-label="JAK Industries home">
-            <img src="/jak/logo-jak-white.png" alt="JAK Industries" className="h-11 w-auto transition-transform duration-700 group-hover:rotate-[-8deg]" />
+            <img src="/jak/logo-jak.png" alt="JAK Industries" width={351} height={69} className="h-8 w-auto box-content rounded-lg dark:bg-white dark:px-2.5 dark:py-1.5 md:h-9" />
           </Link>
 
           <nav className="hidden items-center gap-1 lg:flex" aria-label="Main">
@@ -63,6 +63,7 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             <Link
               to="/contact"
               className="hidden items-center gap-2 rounded-full border border-primary/50 px-4 py-2 text-sm font-semibold text-primary transition-all hover:bg-primary hover:text-primary-foreground hover:shadow-glow md:inline-flex"
@@ -113,5 +114,32 @@ export function Header() {
         )}
       </AnimatePresence>
     </>
+  );
+}
+
+function ThemeToggle() {
+  const [light, setLight] = useState(false);
+  useEffect(() => setLight(document.documentElement.classList.contains("light")), []);
+  const toggle = () => {
+    const next = !light;
+    const c = document.documentElement.classList;
+    c.toggle("light", next);
+    c.toggle("dark", !next);
+    try {
+      localStorage.setItem("theme", next ? "light" : "dark");
+    } catch {}
+    setLight(next);
+  };
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      aria-label={light ? "Switch to dark theme" : "Switch to light theme"}
+      aria-pressed={light}
+      data-testid="theme-toggle"
+      className="grid h-11 w-11 place-items-center rounded-full border border-border text-foreground transition-colors hover:border-primary hover:text-primary"
+    >
+      {light ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+    </button>
   );
 }

@@ -2,18 +2,15 @@ import { useRef, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { AnimatePresence, motion, useMotionValue, useSpring } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import windfarm from "@/assets/windfarm.jpg";
-import clarifier from "@/assets/clarifier.jpg";
-import workshop from "@/assets/workshop.jpg";
 import { GearCanvas } from "@/components/site/Scenes";
 import { Reveal, SectionLabel, SplitText } from "@/components/site/motion";
 import { CTA } from "@/components/site/sections";
-import { POLLUTION_PRODUCTS, WIND_PRODUCTS } from "@/lib/site-data";
+import { POLLUTION_PRODUCTS, PRODUCT_PHOTOS, WIND_PRODUCTS } from "@/lib/site-data";
 
 export const Route = createFileRoute("/products")({
   head: () => ({
     meta: [
-      { title: "Products — Wind Turbine Components & Pollution Control | JAK" },
+      { title: "Products | Wind Turbine Components & Pollution Control | JAK" },
       {
         name: "description",
         content: "Gear stay assemblies, nacelle parts, tower saddles, transport frames, clarifiers up to 40 m, thickeners, aerators and filters by JAK Industries.",
@@ -21,8 +18,14 @@ export const Route = createFileRoute("/products")({
       { property: "og:title", content: "JAK Industries Products" },
       { property: "og:description", content: "Wind turbine components and pollution control equipment." },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://jakindustries.net/products" },
+      { property: "og:image", content: "https://jakindustries.net/og-image.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { name: "twitter:image", content: "https://jakindustries.net/og-image.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://jakindustries.net/products" }],
   }),
   component: Products,
 });
@@ -105,7 +108,7 @@ function Products() {
             </motion.div>
             <SplitText as="h1" animateOnMount delay={0.5} text="Precision parts for power and planet" className="block text-5xl font-semibold leading-[0.95] md:text-7xl" />
             <motion.p className="mt-8 max-w-lg text-lg text-muted-foreground" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1, duration: 1 }}>
-              Two product families, one standard of fabrication. Move your cursor over the gears — then scroll to explore
+              Two product families, one standard of fabrication. Move your cursor over the gears, then scroll to explore
               the line-up.
             </motion.p>
           </div>
@@ -119,9 +122,9 @@ function Products() {
             <SectionLabel index="01">Manufacturer of</SectionLabel>
             <SplitText as="h2" text="Wind mill components" className="mt-6 block text-4xl font-semibold md:text-6xl" />
           </div>
-          <Reveal><p className="max-w-sm text-muted-foreground">Fabricated and machined parts for nacelles, rotors and towers — supplied to leading global turbine makers.</p></Reveal>
+          <Reveal><p className="max-w-sm text-muted-foreground">Fabricated and machined parts for nacelles, rotors and towers, supplied to leading global turbine makers.</p></Reveal>
         </div>
-        <ProductList items={WIND_PRODUCTS} image={windfarm} label="WIND" />
+        <ProductList items={WIND_PRODUCTS} image="/jak/products/pro1.png" label="WIND" />
       </section>
 
       <section className="mx-auto max-w-[1440px] px-5 py-24 md:px-10">
@@ -132,11 +135,28 @@ function Products() {
           </div>
           <Reveal><p className="max-w-sm text-muted-foreground">Water and effluent treatment systems, including reactivated clarifiers up to 40 metres in diameter.</p></Reveal>
         </div>
-        <ProductList items={POLLUTION_PRODUCTS} image={clarifier} label="POLLUTION CONTROL" />
+        <ProductList items={POLLUTION_PRODUCTS} image="/jak/products/pro5.png" label="POLLUTION CONTROL" />
+      </section>
+
+      <section className="mx-auto max-w-[1440px] px-5 pb-24 md:px-10">
+        <SectionLabel index="03">From our shop floor</SectionLabel>
+        <SplitText as="h2" text="Real parts, built in Chennai" className="mt-6 block text-4xl font-semibold md:text-6xl" />
+        <div className="mt-12 grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4">
+          {PRODUCT_PHOTOS.map((p, i) => (
+            <Reveal key={p.src} delay={(i % 4) * 0.08}>
+              <figure className="group overflow-hidden rounded-2xl border border-border bg-card">
+                <div className="overflow-hidden bg-paper">
+                  <img src={p.src} alt={p.caption} loading="lazy" width={294} height={202} className="aspect-[294/202] w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                </div>
+                <figcaption className="px-4 py-3 text-sm text-muted-foreground">{p.caption}</figcaption>
+              </figure>
+            </Reveal>
+          ))}
+        </div>
       </section>
 
       <section className="relative mx-5 overflow-hidden rounded-[2rem] md:mx-10">
-        <img src={workshop} alt="" loading="lazy" className="h-[60vh] w-full object-cover" />
+        <img src="/jak/slides/slide-2.jpg" alt="" loading="lazy" className="h-[60vh] w-full object-cover" />
         <div className="absolute inset-0 bg-background/60" />
         <div className="absolute inset-0 flex items-center justify-center p-6 text-center">
           <SplitText as="h2" text="Built to drawing. Delivered on time." className="block max-w-4xl text-4xl font-semibold md:text-6xl" />

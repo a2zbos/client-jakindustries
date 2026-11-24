@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { HeartHandshake } from "lucide-react";
-import community from "@/assets/community.jpg";
 import { PageHero } from "@/components/site/PageHero";
 import { Reveal, SectionLabel, SplitText } from "@/components/site/motion";
 import { CTA, ScrollHighlight } from "@/components/site/sections";
@@ -20,8 +19,14 @@ export const Route = createFileRoute("/csr")({
       { property: "og:title", content: "CSR at JAK Industries" },
       { property: "og:description", content: "Education, food and health support for the communities around us." },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://jakindustries.net/csr" },
+      { property: "og:image", content: "https://jakindustries.net/og-image.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { name: "twitter:image", content: "https://jakindustries.net/og-image.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://jakindustries.net/csr" }],
   }),
   component: CSR,
 });
@@ -67,15 +72,15 @@ function CSR() {
       <PageHero
         eyebrow="Corporate social responsibility"
         title="Growth that lifts everyone"
-        intro="We see CSR as our commitment to inclusive, sustainable growth — and wind power itself as part of being a responsible corporate citizen."
-        image={community}
+        intro="We see CSR as our commitment to inclusive, sustainable growth, and wind power itself as part of being a responsible corporate citizen."
+        image={"/jak/slides/slide-1.jpg"}
       />
 
       <section className="mx-auto max-w-[1440px] px-5 py-28 md:px-10">
         <SectionLabel index="01">Our commitment</SectionLabel>
         <ScrollHighlight
           className="mt-10 max-w-5xl font-display text-3xl font-medium leading-[1.2] tracking-tight md:text-5xl"
-          text="Books for students, meals for the hungry, care for the elderly and relief when crisis hits — this is how we give back to the communities that build with us."
+          text="Books for students, meals for the hungry, care for the elderly and relief when crisis hits. This is how we give back to the communities that build with us."
         />
       </section>
 

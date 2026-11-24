@@ -125,12 +125,42 @@
   color-scheme: dark;
 }
 
+/* Light theme: same roles, paper base, deeper green so it reads on white. */
+html.light {
+  color-scheme: light;
+  --background: oklch(0.975 0.006 110);
+  --foreground: oklch(0.2 0.012 165);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.012 165);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.012 165);
+  --primary: oklch(0.52 0.15 145);
+  --primary-foreground: oklch(0.99 0.005 110);
+  --primary-glow: oklch(0.6 0.13 165);
+  --secondary: oklch(0.93 0.01 140);
+  --secondary-foreground: oklch(0.2 0.012 165);
+  --muted: oklch(0.94 0.008 140);
+  --muted-foreground: oklch(0.45 0.015 155);
+  --accent: oklch(0.92 0.02 145);
+  --accent-foreground: oklch(0.2 0.012 165);
+  --spark: oklch(0.62 0.17 55);
+  --steel: oklch(0.5 0.015 220);
+  --border: oklch(0.2 0.012 165 / 12%);
+  --input: oklch(0.2 0.012 165 / 18%);
+  --ring: oklch(0.52 0.15 145 / 60%);
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: oklch(0.2 0.012 165);
+  --sidebar-primary: oklch(0.52 0.15 145);
+  --sidebar-primary-foreground: oklch(0.99 0.005 110);
+  --sidebar-accent: oklch(0.92 0.02 145);
+  --sidebar-accent-foreground: oklch(0.2 0.012 165);
+  --sidebar-border: oklch(0.2 0.012 165 / 12%);
+  --shadow-deep: 0 40px 80px -30px oklch(0.2 0.02 165 / 25%);
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
-  }
-  html {
-    color-scheme: dark;
   }
   html.lenis,
   html.lenis body {
@@ -249,6 +279,8 @@
   0%, 100% { opacity: 0.55; transform: scale(1); }
   50% { opacity: 1; transform: scale(1.08); }
 }
+
+html.light .grain::after { opacity: 0.035; }
 
 @media (prefers-reduced-motion: reduce) {
   .grain::after { animation: none; }

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
-import windfarm from "@/assets/windfarm.jpg";
 import { PageHero } from "@/components/site/PageHero";
 import { Magnetic, Reveal, SectionLabel, SplitText } from "@/components/site/motion";
 import { CONTACT, UNITS } from "@/lib/site-data";
@@ -11,7 +10,7 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact JAK Industries — Chennai Units & Quote Request" },
+      { title: "Contact JAK Industries | Chennai Units & Quote Request" },
       {
         name: "description",
         content: "Call +91 72999 87393 or email jakindustries2007@yahoo.com. Visit our four units in Thirumullaivoyal, Kakkalur, Gummidipoondi and Kattur.",
@@ -19,8 +18,14 @@ export const Route = createFileRoute("/contact")({
       { property: "og:title", content: "Contact JAK Industries" },
       { property: "og:description", content: "Request a quote or visit one of our four units around Chennai." },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://jakindustries.net/contact" },
+      { property: "og:image", content: "https://jakindustries.net/og-image.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { name: "twitter:image", content: "https://jakindustries.net/og-image.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://jakindustries.net/contact" }],
   }),
   component: Contact,
 });
@@ -41,12 +46,31 @@ function Field({ label, name, type = "text", textarea = false, required = false 
   );
 }
 
+type FormStatus = "idle" | "sending" | "success" | "error";
+
+// Apps Script does not send CORS headers, so the browser cannot read its reply.
+// We send a simple form-encoded POST (no-cors): it reaches the script, and we only
+// report failure when the request itself cannot be sent (e.g. no connection).
+async function sendQuoteRequest(form: HTMLFormElement): Promise<boolean> {
+  const data = new URLSearchParams();
+  new FormData(form).forEach((value, key) => {
+    if (typeof value === "string") data.append(key, value);
+  });
+  try {
+    await fetch(CONTACT.formEndpoint, { method: "POST", mode: "no-cors", body: data });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function Contact() {
   const [unit, setUnit] = useState(0);
+  const [status, setStatus] = useState<FormStatus>("idle");
   const active = UNITS[unit] ?? UNITS[0]!;
   return (
     <>
-      <PageHero eyebrow="Contact" title="Let's talk steel" intro="Tell us what you need fabricated — we'll come back with a quote." image={windfarm} />
+      <PageHero eyebrow="Contact" title="Let's talk steel" intro="Tell us what you need fabricated and we'll come back with a quote." image={"/jak/slides/slide-2.jpg"} />
 
       <section className="mx-auto grid max-w-[1440px] gap-16 px-5 py-28 md:grid-cols-2 md:px-10">
         <div>
@@ -54,14 +78,17 @@ function Contact() {
           <SplitText as="h2" text="Send us your requirement" className="mt-6 block text-4xl font-semibold md:text-5xl" />
           <form
             className="mt-12 space-y-8"
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
-              const f = new FormData(e.currentTarget);
-              const subject = encodeURIComponent(`Quote request from ${String(f.get("name") ?? "")}`);
-              const body = encodeURIComponent(
-                `Name: ${String(f.get("name") ?? "")}\nCompany: ${String(f.get("company") ?? "")}\nPhone: ${String(f.get("phone") ?? "")}\nEmail: ${String(f.get("email") ?? "")}\n\n${String(f.get("message") ?? "")}`,
-              );
-              window.location.href = `mailto:${CONTACT.email}?subject=${subject}&body=${body}`;
+              const form = e.currentTarget;
+              setStatus("sending");
+              const ok = await sendQuoteRequest(form);
+              if (ok) {
+                form.reset();
+                setStatus("success");
+              } else {
+                setStatus("error");
+              }
             }}
           >
             <div className="grid gap-8 sm:grid-cols-2">
@@ -72,11 +99,22 @@ function Contact() {
             </div>
             <Field label="What do you need fabricated?" name="message" textarea required />
             <Magnetic>
-              <button type="submit" className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 font-semibold text-primary-foreground shadow-glow">
-                Send request <ArrowUpRight className="h-4 w-4" />
+              <button
+                type="submit"
+                disabled={status === "sending"}
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 font-semibold text-primary-foreground shadow-glow disabled:opacity-60"
+              >
+                {status === "sending" ? "Sending..." : "Send request"} <ArrowUpRight className="h-4 w-4" />
               </button>
             </Magnetic>
-            <p className="text-xs text-muted-foreground">Opens your email app with the details filled in.</p>
+            <p role="status" className="text-sm">
+              {status === "success" && <span className="text-primary">Thank you. Your request has been sent and we will reply within a working day.</span>}
+              {status === "error" && (
+                <span className="text-destructive">
+                  Sorry, your request could not be sent. Please try again or call {CONTACT.phoneMobile}.
+                </span>
+              )}
+            </p>
           </form>
         </div>
 
@@ -139,7 +177,7 @@ function Contact() {
                   key={active.name}
                   title={`Map of JAK Industries ${active.name}`}
                   src={`https://maps.google.com/maps?q=${encodeURIComponent(active.map)}&z=15&output=embed`}
-                  className="absolute inset-0 h-full w-full grayscale invert-[0.9] hue-rotate-180"
+                  className="absolute inset-0 h-full w-full grayscale dark:invert-[0.9] dark:hue-rotate-180"
                   loading="lazy"
                   initial={{ opacity: 0, scale: 1.08 }}
                   animate={{ opacity: 1, scale: 1 }}

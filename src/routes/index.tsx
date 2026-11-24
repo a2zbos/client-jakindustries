@@ -2,11 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown, ArrowUpRight, Award, Factory, Wind, Droplets } from "lucide-react";
-import windfarm from "@/assets/windfarm.jpg";
-import workshop from "@/assets/workshop.jpg";
 import clarifier from "@/assets/clarifier.jpg";
 import galvanizing from "@/assets/galvanizing.jpg";
 import { TurbineCanvas } from "@/components/site/Scenes";
+import { CapabilityArt } from "@/components/site/CapabilityArt";
 import { Counter, Magnetic, ParallaxImage, Reveal, SectionLabel, SplitText, TiltCard } from "@/components/site/motion";
 import { ClientMarquee, CTA, HorizontalScroll, ScrollHighlight, TextMarquee } from "@/components/site/sections";
 import { CAPABILITIES, HERO_SLIDES, PROMISES, STATS } from "@/lib/site-data";
@@ -14,20 +13,26 @@ import { CAPABILITIES, HERO_SLIDES, PROMISES, STATS } from "@/lib/site-data";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "JAK Industries — Forging the Wind Economy | Chennai" },
+      { title: "JAK Industries | Forging the Wind Economy | Chennai" },
       {
         name: "description",
         content:
-          "Heavy fabrication of wind turbine components and pollution control equipment from four units in Chennai. ISO 9001, 14001 and 45001 certified since 2004.",
+          "Heavy fabrication of wind turbine components and pollution control equipment from four units in Chennai. ISO 9001, 14001, 45001 and 3834-2 certified.",
       },
-      { property: "og:title", content: "JAK Industries — Forging the Wind Economy" },
+      { property: "og:title", content: "JAK Industries | Forging the Wind Economy" },
       {
         property: "og:description",
         content: "Wind turbine components and pollution control equipment, fabricated in Chennai since 2004.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://jakindustries.net/" },
+      { property: "og:image", content: "https://jakindustries.net/og-image.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { name: "twitter:image", content: "https://jakindustries.net/og-image.jpg" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://jakindustries.net/" }],
   }),
   component: Home,
 });
@@ -48,13 +53,13 @@ function Hero() {
   const slide = HERO_SLIDES[i] ?? HERO_SLIDES[0]!;
 
   return (
-    <section ref={ref} className="relative h-[100svh] min-h-[680px] overflow-hidden">
-      <motion.img src={windfarm} alt="" style={{ scale: bgScale }} className="absolute inset-0 h-full w-full object-cover opacity-40" />
+    <section ref={ref} className="relative flex min-h-[100svh] flex-col overflow-hidden pb-16 pt-28">
+      <motion.img src="/jak/slides/slide-1.jpg" alt="" style={{ scale: bgScale }} className="absolute inset-0 h-full w-full object-cover opacity-40" />
       <div className="absolute inset-0 bg-vignette" />
       <TurbineCanvas className="absolute inset-0" />
       <div className="absolute inset-x-0 bottom-0 h-1/2 bg-fade-b" />
 
-      <motion.div style={{ y: textY, opacity: fade }} className="relative z-10 mx-auto flex h-full max-w-[1440px] flex-col justify-center px-5 md:px-10">
+      <motion.div style={{ y: textY, opacity: fade }} className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-1 flex-col justify-center px-5 md:px-10">
         <div className="max-w-3xl">
           <AnimatePresence mode="wait">
             <motion.div key={i} exit={{ opacity: 0, y: -30, filter: "blur(8px)" }} transition={{ duration: 0.5 }}>
@@ -79,7 +84,7 @@ function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.6, ease: EASE }}
           >
-            Critical components for the world's biggest wind turbine makers and pollution control systems — fabricated,
+            Critical components for the world's biggest wind turbine makers and pollution control systems, fabricated,
             machined and assembled in Chennai since 2004.
           </motion.p>
           <motion.div
@@ -120,7 +125,7 @@ function Hero() {
 }
 
 const DIVISIONS = [
-  { icon: Wind, title: "Wind turbine components", body: "Nacelle covers, nose cone rings, tower saddles, transport frames and more.", image: windfarm, to: "/products" as const },
+  { icon: Wind, title: "Wind turbine components", body: "Nacelle covers, nose cone rings, tower saddles, transport frames and more.", image: "/jak/slides/slide-2.jpg", to: "/products" as const },
   { icon: Droplets, title: "Pollution control equipment", body: "Clarifiers up to 40 m diameter, thickeners, aerators and filtration.", image: clarifier, to: "/products" as const },
   { icon: Factory, title: "LADCO hot-dip galvanizing", body: "One-stop galvanizing with an 8.6 m zinc bath and its own effluent plant.", image: galvanizing, to: "/ladco" as const },
 ];
@@ -140,7 +145,7 @@ function Home() {
           text="What began in 2004 as a small fabrication shop is now a key supplier of critical components to major wind turbine makers and pollution control consultants across India."
         />
         <Reveal delay={0.1} className="mt-14 flex flex-wrap gap-3">
-          {["ISO 9001:2015", "ISO 14001:2015", "ISO 45001:2018 (OH&S)"].map((c) => (
+          {["ISO 9001:2015", "ISO 14001:2015", "ISO 45001:2018 (OH&S)", "ISO 3834-2:2021 (Welding)"].map((c) => (
             <span key={c} className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 font-mono text-xs text-foreground">
               <Award className="h-3.5 w-3.5 text-primary" /> {c}
             </span>
@@ -162,7 +167,7 @@ function Home() {
         </div>
       </section>
 
-      {/* Capabilities — horizontal */}
+      {/* Capabilities, horizontal */}
       <HorizontalScroll
         title={
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
@@ -170,7 +175,7 @@ function Home() {
               <SectionLabel index="02">What we do</SectionLabel>
               <SplitText as="h2" text="One partner, from plate to plant" className="mt-6 block max-w-3xl text-4xl font-semibold leading-[1] md:text-6xl" />
             </div>
-            <p className="max-w-sm text-muted-foreground">Fabrication, machining, assembly, erection, commissioning and testing — all under one roof, across four units.</p>
+            <p className="max-w-sm text-muted-foreground">Fabrication, machining, assembly, erection, commissioning and testing, all under one roof, across four units.</p>
           </div>
         }
       >
@@ -181,6 +186,7 @@ function Home() {
                 <span className="font-mono text-sm text-primary">{c.n}</span>
                 <ArrowUpRight className="h-6 w-6 text-muted-foreground transition-transform duration-500 group-hover:rotate-45 group-hover:text-primary" />
               </div>
+              <CapabilityArt n={c.n} />
               <div>
                 <h3 className="text-3xl font-semibold leading-tight">{c.title}</h3>
                 <p className="mt-4 text-muted-foreground">{c.body}</p>
@@ -193,7 +199,7 @@ function Home() {
       {/* About + promises */}
       <section className="mx-auto grid max-w-[1440px] items-center gap-16 px-5 py-28 md:grid-cols-2 md:px-10 md:py-40">
         <div className="relative">
-          <ParallaxImage src={workshop} alt="Welder fabricating a wind turbine component" className="aspect-[4/5] rounded-3xl" />
+          <ParallaxImage src="/jak/about/ab4.jpg" alt="JAK team with visiting partners on the shop floor" className="aspect-[4/5] rounded-3xl" />
           <motion.div
             initial={{ opacity: 0, scale: 0.6, rotate: -12 }}
             whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
@@ -202,7 +208,7 @@ function Home() {
             className="absolute -bottom-8 -right-4 grid h-36 w-36 place-items-center rounded-full bg-spark text-center text-paper-foreground shadow-heat md:-right-8"
           >
             <div>
-              <div className="font-display text-3xl font-bold">44+</div>
+              <div className="font-display text-3xl font-bold">40+</div>
               <div className="text-[10px] font-semibold uppercase tracking-widest">years of expertise</div>
             </div>
           </motion.div>
@@ -212,7 +218,7 @@ function Home() {
           <SplitText as="h2" text="Steel, shaped by decades of know-how" className="mt-6 block text-4xl font-semibold leading-[1.02] md:text-6xl" />
           <Reveal delay={0.2}>
             <p className="mt-8 text-lg leading-relaxed text-muted-foreground">
-              Our team of professionals brings more than four decades of heavy structural fabrication to every job — in
+              Our team of professionals brings 40 years of expertise in heavy structural fabrication to every job, in
               carbon steel, stainless steel and aluminium. "Strive for customer delight" is how we work: the right
               quality, inside the agreed time.
             </p>
@@ -276,7 +282,7 @@ function Home() {
             <Reveal delay={0.2}>
               <p className="mt-6 text-muted-foreground">
                 From a Vestas certificate of appreciation for keeping supply flowing through the pandemic, to a Gamesa
-                Best Service Award — our partners notice the difference.
+                Best Service Award. Our partners notice the difference.
               </p>
             </Reveal>
           </div>
@@ -285,7 +291,10 @@ function Home() {
               <img src="/jak/about/a1.jpg" alt="Vestas certificate of appreciation for JAK Industries" loading="lazy" className="w-full" />
             </TiltCard>
             <TiltCard className="mt-12 overflow-hidden rounded-2xl border border-border shadow-deep" max={14}>
-              <img src="/jak/about/ab8.jpg" alt="Gamesa Best Service Award trophy" loading="lazy" className="w-full" />
+              <img src="/jak/awards/aw.png" alt="Gamesa Best Service Provider award trophy and certificate" loading="lazy" className="w-full" />
+            </TiltCard>
+            <TiltCard className="col-span-2 overflow-hidden rounded-2xl border border-border shadow-deep" max={8}>
+              <img src="/jak/awards/aw1.png" alt="JAK Industries receiving the Gamesa award at the Gamesa Suppliers' Meet, February 2014" loading="lazy" className="w-full" />
             </TiltCard>
           </div>
         </div>

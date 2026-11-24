@@ -23,7 +23,7 @@ export function PageHero({
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "60%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
   return (
-    <section ref={ref} className="relative flex min-h-[88vh] items-end overflow-hidden">
+    <section ref={ref} className="relative flex min-h-[88vh] items-end overflow-hidden pt-32">
       <motion.img src={image} alt="" style={{ scale, y }} className="absolute inset-0 h-full w-full object-cover" />
       <div className="absolute inset-0 bg-background/55" />
       <div className="absolute inset-0 bg-fade-b" />

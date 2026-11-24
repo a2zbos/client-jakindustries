@@ -40,9 +40,9 @@ export function Preloader() {
             transition={{ duration: 0.5 }}
           >
             <motion.img
-              src="/jak/logo-jak-white.png"
+              src="/jak/logo-jak.png"
               alt=""
-              className="h-24 w-auto"
+              className="h-14 w-auto box-content rounded-xl dark:bg-white dark:px-4 dark:py-3"
               initial={{ rotateY: 90, opacity: 0 }}
               animate={{ rotateY: 0, opacity: 1 }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}

@@ -1,24 +1,14 @@
-# Jak Industries Reimagined
+# JAK Industries
 
-https://jakindustries.net/ recreate this whole website, with more god level transitions and 3d animations
+Website for JAK Industries (jakindustries.net): heavy fabrication for wind and pollution control, Chennai.
 
-This project was built with [Lovable](https://lovable.dev).
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/dbbdb698-71e7-42e0-8686-ae8a35911cbf).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+Built with TanStack Start, React 19, Tailwind v4, framer-motion and react-three-fiber.
 
 ## Development
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
+npm install
+npm run dev     # http://localhost:5173
+npm run build
+npm test
 ```

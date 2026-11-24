@@ -18,6 +18,8 @@ export const CONTACT = {
   phoneOfficeHref: "tel:+914426370283",
   email: "jakindustries2007@yahoo.com",
   office: ["28/A, New Street, Arjuna Nagar,", "Near Kannan Theatre, Thirumullaivayal,", "Chennai – 600 062"],
+  // Google Apps Script web app URL (see google-apps-script/README.md). Requests are emailed to CONTACT.email.
+  formEndpoint: "https://script.google.com/macros/s/AKfycbwPTP25IxWBTN7KaE9eA8i9I_HYijNY4PYmzI_mLygz34HBg8YgP1tr71YDfErmpeBjIg/exec",
 };
 
 export const FOUNDED = 2004;
@@ -25,8 +27,8 @@ export const FOUNDED = 2004;
 export const STATS = [
   { value: 2004, label: "Founded in Chennai", suffix: "", plain: true },
   { value: 4, label: "Manufacturing units", suffix: "" },
-  { value: 360, label: "Components engineered", suffix: "+" },
-  { value: 44, label: "Years of leadership expertise", suffix: "+" },
+  { value: 1200, label: "Components engineered", suffix: "+" },
+  { value: 40, label: "Years of leadership expertise", suffix: "+" },
 ] as const;
 
 export const PROMISES = [
@@ -37,7 +39,7 @@ export const PROMISES = [
 ];
 
 export const HERO_SLIDES = [
-  { kicker: "Green energy, two decades strong", title: ["Forging the", "wind economy"] },
+  { kicker: "Green energy, 22 years strong", title: ["Forging the", "wind economy"] },
   { kicker: "Sustainable energy solutions", title: ["Cleaner air,", "built in steel"] },
   { kicker: "Clean · Abundant · Environment friendly", title: ["Wind power", "empowers life"] },
 ];
@@ -64,6 +66,20 @@ export const WIND_PRODUCTS = [
   "Tarp & Tarp Plugs – Composites",
 ];
 
+export const PRODUCT_PHOTOS = [
+  { src: "/jak/products/pro1.png", caption: "Transport frames ready for dispatch" },
+  { src: "/jak/products/pro2.png", caption: "Fabricated wind turbine component" },
+  { src: "/jak/products/pro3.png", caption: "Nacelle cover loaded for rail transport" },
+  { src: "/jak/products/pro4.png", caption: "Sand & carbon filters" },
+  { src: "/jak/products/pro5.png", caption: "Thermic fluid evaporator system" },
+  { src: "/jak/products/pro6.png", caption: "Evaporator system on test" },
+  { src: "/jak/products/pro7.png", caption: "Transport frame" },
+  { src: "/jak/products/pro8.png", caption: "Agitator" },
+  { src: "/jak/products/pro9.png", caption: "Shear connectors" },
+  { src: "/jak/products/pro10.png", caption: "Tarp plugs – composites" },
+  { src: "/jak/products/pro11.png", caption: "Blade transport frames" },
+];
+
 export const POLLUTION_PRODUCTS = [
   "Reactivated Clarifier (up to 40 m dia.)",
   "Clarifier",
@@ -78,20 +94,22 @@ export const POLLUTION_PRODUCTS = [
 
 export const CLIENTS = [
   { name: "Vestas Wind Technology", logo: "/jak/clients/jaa.jpg" },
-  { name: "Siemens Gamesa Renewable Energy", logo: "/jak/clients/5.jpg" },
+  { name: "Vayona Energy", logo: "/jak/clients/5.jpg" },
   { name: "Nordex India", logo: "/jak/clients/nordex.jpg" },
   { name: "Enercon", logo: "/jak/clients/enercon.jpg" },
   { name: "TPI Composites India", logo: "/jak/clients/6.jpg" },
   { name: "Wheels India", logo: "/jak/clients/4.jpg" },
   { name: "Carborundum Universal", logo: "/jak/clients/cli02.jpg" },
   { name: "Hine Hydraulics India", logo: "/jak/clients/2.jpg" },
-  { name: "Ymer Technology", logo: "/jak/clients/3.jpg" },
+  { name: "HydraSpecma", logo: "/jak/clients/3.jpg" },
   { name: "JS Auto Cast Foundry", logo: "/jak/clients/7.jpg" },
   { name: "BAETTR India", logo: "/jak/clients/baeter.jpg" },
   { name: "Indo Cool Engineering", logo: "/jak/clients/cli11.jpg" },
   { name: "G.K. Technologies", logo: "/jak/clients/cli19.jpg" },
   { name: "Pioneer Wincon", logo: "/jak/clients/cli6.jpg" },
   { name: "EIMCO – KCP", logo: "/jak/clients/cli7.jpg" },
+  { name: "ESAB", logo: "/jak/clients/esab.jpg" },
+  { name: "Eriez", logo: "/jak/clients/eriez.jpg" },
 ];
 
 export const TEAM = [
@@ -147,25 +165,27 @@ export const ISO_CERTS = [
   { code: "ISO 9001:2015", title: "Quality Management System", image: "/jak/certs/cer2.jpg" },
   { code: "ISO 14001:2015", title: "Environmental Management System", image: "/jak/certs/cer1.jpg" },
   { code: "ISO 45001:2018", title: "Occupational Health & Safety", image: "/jak/certs/cer3.jpg" },
+  { code: "ISO 3834-2:2021", title: "Welding Quality Requirements", image: "/jak/certs/cer4.jpg" },
+  { code: "ISO 3834-2 Annex", title: "Certified Scope & Welding Processes", image: "/jak/certs/cer5.jpg" },
 ];
 
 export const LADCO_CERTS = [
-  { code: "ISO 9001:2008", title: "LADCO · Quality Management", image: "/jak/certs/ladco-9001.jpg" },
-  { code: "ISO 14001:2004", title: "LADCO · Environmental Management", image: "/jak/certs/ladco-14001.jpg" },
-  { code: "OHSAS 18001:2007", title: "LADCO · Health & Safety", image: "/jak/certs/ladco-18001.jpg" },
+  { code: "ISO 9001:2015", title: "LADCO · Quality Management", image: "/jak/certs/ladco-9001.jpg" },
+  { code: "ISO 14001:2015", title: "LADCO · Environmental Management", image: "/jak/certs/ladco-14001.jpg" },
+  { code: "ISO 45001:2018", title: "LADCO · Health & Safety", image: "/jak/certs/ladco-18001.jpg" },
 ];
 
 export const WPS = [
-  "Single V butt joint (plate) — GMAW",
-  "“T” butt joint — GMAW",
-  "Fillet weld joint — GMAW",
-  "Single V butt joint (plate) — SMAW",
-  "“T” butt joint — SMAW",
-  "Fillet weld joint — SMAW",
-  "Single V butt joint (pipe) — GMAW",
-  "Single V butt joint (pipe) — SMAW",
-  "Fillet weld TEE joint — GMAW (a42a7)",
-  "Fillet weld TEE joint — GMAW (a32a5)",
+  "Single V butt joint (plate), GMAW",
+  "“T” butt joint, GMAW",
+  "Fillet weld joint, GMAW",
+  "Single V butt joint (plate), SMAW",
+  "“T” butt joint, SMAW",
+  "Fillet weld joint, SMAW",
+  "Single V butt joint (pipe), GMAW",
+  "Single V butt joint (pipe), SMAW",
+  "Fillet weld TEE joint, GMAW (a42a7)",
+  "Fillet weld TEE joint, GMAW (a32a5)",
 ];
 
 export const CSR_ACTIVITIES = [

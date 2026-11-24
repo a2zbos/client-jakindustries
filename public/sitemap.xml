@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://jakindustries.net/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://jakindustries.net/about</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://jakindustries.net/ladco</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://jakindustries.net/products</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://jakindustries.net/customers</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://jakindustries.net/certifications</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://jakindustries.net/csr</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://jakindustries.net/contact</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+</urlset>

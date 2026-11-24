@@ -8,12 +8,11 @@ import {
   Scripts,
   type ErrorComponentProps,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import { MotionConfig } from "framer-motion";
 
 import appCss from "../styles.css?url";
-import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import {
@@ -24,6 +23,34 @@ import {
   ScrollProgress,
   SmoothScroll,
 } from "@/components/site/Transitions";
+
+const SITE_URL = "https://jakindustries.net";
+
+// Business details Google reads for search results and the knowledge panel.
+const ORGANIZATION_LD = {
+  "@context": "https://schema.org",
+  "@type": ["Organization", "LocalBusiness"],
+  "@id": `${SITE_URL}/#organization`,
+  name: "JAK Industries",
+  url: SITE_URL,
+  logo: `${SITE_URL}/jak/logo-jak.png`,
+  image: `${SITE_URL}/og-image.jpg`,
+  description:
+    "ISO-certified heavy fabrication of wind turbine components and pollution control equipment in Chennai since 2004.",
+  foundingDate: "2004",
+  telephone: "+91-72999-87393",
+  email: "jakindustries2007@yahoo.com",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "28/A, New Street, Arjuna Nagar, Thirumullaivoyal",
+    addressLocality: "Chennai",
+    addressRegion: "Tamil Nadu",
+    postalCode: "600062",
+    addressCountry: "IN",
+  },
+  areaServed: "IN",
+  knowsAbout: ["Wind turbine components", "Heavy fabrication", "Pollution control equipment", "Hot-dip galvanizing"],
+};
 
 function NotFoundComponent() {
   return (
@@ -50,9 +77,6 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: ErrorComponentProps) {
   console.error(error);
   const router = useRouter();
-  useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
-  }, [error]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -91,21 +115,23 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "JAK Industries — Heavy Fabrication for Wind & Pollution Control" },
+      { title: "JAK Industries | Heavy Fabrication for Wind & Pollution Control" },
       {
         name: "description",
         content:
           "JAK Industries, Chennai: ISO-certified heavy fabrication of wind turbine components and pollution control equipment since 2004.",
       },
       { name: "author", content: "JAK Industries" },
-      { property: "og:title", content: "JAK Industries — Heavy Fabrication for Wind & Pollution Control" },
+      { property: "og:title", content: "JAK Industries | Heavy Fabrication for Wind & Pollution Control" },
       {
         property: "og:description",
         content: "ISO-certified heavy fabrication of wind turbine components and pollution control equipment since 2004.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "JAK Industries" },
+      { property: "og:locale", content: "en_IN" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "theme-color", content: "#141a17" },
+      { name: "theme-color", content: "#f6f6f2" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -129,9 +155,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en-IN" className="light" suppressHydrationWarning>
       <head>
+        {/* Apply the saved theme before first paint so there is no flash. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem("theme");if(t==="dark"){var c=document.documentElement.classList;c.remove("light");c.add("dark")}}catch(e){}`,
+          }}
+        />
         <HeadContent />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION_LD) }} />
       </head>
       <body className="grain">
         {children}
