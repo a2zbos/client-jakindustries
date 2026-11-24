@@ -2,9 +2,11 @@ import { Link } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
-import { CONTACT, NAV } from "@/lib/site-data";
+import { NAV } from "@/lib/site-data";
+import { telHref, useContent } from "@/lib/content";
 
 export function Footer() {
+  const { company } = useContent();
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end end"] });
   const x = useTransform(scrollYProgress, [0, 1], ["20%", "-8%"]);
@@ -44,13 +46,13 @@ export function Footer() {
             <div className="eyebrow mb-5">Registered office</div>
             <p className="flex gap-3 text-muted-foreground">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-              <span>{CONTACT.office.map((l) => <span key={l} className="block">{l}</span>)}</span>
+              <span>{company.office.map((l) => <span key={l} className="block">{l}</span>)}</span>
             </p>
-            <a href={CONTACT.phoneMobileHref} className="flex gap-3 text-muted-foreground hover:text-foreground">
-              <Phone className="h-4 w-4 text-primary" /> {CONTACT.phoneMobile} · {CONTACT.phoneOffice}
+            <a href={telHref(company.phoneMobile)} className="flex gap-3 text-muted-foreground hover:text-foreground">
+              <Phone className="h-4 w-4 text-primary" /> {company.phoneMobile} · {company.phoneOffice}
             </a>
-            <a href={`mailto:${CONTACT.email}`} className="flex gap-3 text-muted-foreground hover:text-foreground">
-              <Mail className="h-4 w-4 text-primary" /> {CONTACT.email}
+            <a href={`mailto:${company.email}`} className="flex gap-3 text-muted-foreground hover:text-foreground">
+              <Mail className="h-4 w-4 text-primary" /> {company.email}
             </a>
           </div>
         </div>

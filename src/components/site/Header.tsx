@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { Menu, X, ArrowUpRight, Sun, Moon } from "lucide-react";
-import { NAV, CONTACT } from "@/lib/site-data";
+import { NAV } from "@/lib/site-data";
+import { telHref, useContent } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 export function Header() {
+  const { company } = useContent();
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -107,8 +109,8 @@ export function Header() {
               ))}
             </nav>
             <div className="mt-auto space-y-1 text-sm text-muted-foreground">
-              <a href={CONTACT.phoneMobileHref} className="block">{CONTACT.phoneMobile}</a>
-              <a href={`mailto:${CONTACT.email}`} className="block">{CONTACT.email}</a>
+              <a href={telHref(company.phoneMobile)} className="block">{company.phoneMobile}</a>
+              <a href={`mailto:${company.email}`} className="block">{company.email}</a>
             </div>
           </motion.div>
         )}

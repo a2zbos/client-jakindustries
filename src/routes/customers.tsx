@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { PageHero } from "@/components/site/PageHero";
 import { SectionLabel, SplitText, TiltCard } from "@/components/site/motion";
 import { ClientMarquee, CTA } from "@/components/site/sections";
-import { CLIENTS } from "@/lib/site-data";
+import { useContent } from "@/lib/content";
 
 export const Route = createFileRoute("/customers")({
   head: () => ({
@@ -29,6 +29,7 @@ export const Route = createFileRoute("/customers")({
 });
 
 function Customers() {
+  const { clients } = useContent();
   return (
     <>
       <PageHero
@@ -41,7 +42,7 @@ function Customers() {
         <SectionLabel index="01">Our customers</SectionLabel>
         <SplitText as="h2" text="Seventeen partners and counting" className="mt-6 block text-4xl font-semibold md:text-6xl" />
         <div className="mt-14 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
-          {CLIENTS.map((c, i) => (
+          {clients.map((c, i) => (
             <motion.div
               key={c.name}
               initial={{ opacity: 0, rotateX: -70, y: 60 }}

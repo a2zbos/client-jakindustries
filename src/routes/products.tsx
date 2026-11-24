@@ -5,7 +5,8 @@ import { ArrowUpRight } from "lucide-react";
 import { GearCanvas } from "@/components/site/Scenes";
 import { Reveal, SectionLabel, SplitText } from "@/components/site/motion";
 import { CTA } from "@/components/site/sections";
-import { POLLUTION_PRODUCTS, PRODUCT_PHOTOS, WIND_PRODUCTS } from "@/lib/site-data";
+import { POLLUTION_PRODUCTS, WIND_PRODUCTS } from "@/lib/site-data";
+import { useContent } from "@/lib/content";
 
 export const Route = createFileRoute("/products")({
   head: () => ({
@@ -96,6 +97,7 @@ function ProductList({ items, image, label }: { items: string[]; image: string; 
 }
 
 function Products() {
+  const { productPhotos } = useContent();
   return (
     <>
       <section className="relative overflow-hidden pt-20">
@@ -142,7 +144,7 @@ function Products() {
         <SectionLabel index="03">From our shop floor</SectionLabel>
         <SplitText as="h2" text="Real parts, built in Chennai" className="mt-6 block text-4xl font-semibold md:text-6xl" />
         <div className="mt-12 grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4">
-          {PRODUCT_PHOTOS.map((p, i) => (
+          {productPhotos.map((p, i) => (
             <Reveal key={p.src} delay={(i % 4) * 0.08}>
               <figure className="group overflow-hidden rounded-2xl border border-border bg-card">
                 <div className="overflow-hidden bg-paper">

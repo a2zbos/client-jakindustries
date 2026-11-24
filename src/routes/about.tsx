@@ -4,7 +4,8 @@ import { Compass, Eye, Gem, Target } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
 import { Counter, Reveal, SectionLabel, SplitText, TiltCard, WipeImage } from "@/components/site/motion";
 import { CTA, ScrollHighlight, TextMarquee } from "@/components/site/sections";
-import { QUALITY_OBJECTIVES, TEAM, UNITS, VALUES } from "@/lib/site-data";
+import { QUALITY_OBJECTIVES, VALUES } from "@/lib/site-data";
+import { useContent } from "@/lib/content";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -32,6 +33,7 @@ export const Route = createFileRoute("/about")({
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 function About() {
+  const { team, units } = useContent();
   return (
     <>
       <PageHero
@@ -122,7 +124,7 @@ function About() {
           <SectionLabel index="03">Infrastructure</SectionLabel>
           <SplitText as="h2" text="Four units, one standard" className="mt-6 block text-4xl font-semibold md:text-6xl" />
           <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {UNITS.map((u, i) => (
+            {units.map((u, i) => (
               <Reveal key={u.name} delay={i * 0.1}>
                 <TiltCard className="h-full rounded-3xl border border-border bg-background p-7" max={10}>
                   <div style={{ transform: "translateZ(30px)" }}>
@@ -154,7 +156,7 @@ function About() {
         <SectionLabel index="04">Our team</SectionLabel>
         <SplitText as="h2" text="The people behind the steel" className="mt-6 block text-4xl font-semibold md:text-6xl" />
         <div className="mt-14 grid grid-cols-2 gap-6 lg:grid-cols-4">
-          {TEAM.map((m, i) => (
+          {team.map((m, i) => (
             <Reveal key={m.name} delay={i * 0.1}>
               <TiltCard className="group overflow-hidden rounded-3xl border border-border bg-card" max={12}>
                 <div className="aspect-[4/5] overflow-hidden">

@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
 import { Magnetic, Reveal, SectionLabel, SplitText } from "@/components/site/motion";
-import { CONTACT, UNITS } from "@/lib/site-data";
+import { telHref, useContent } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/contact")({
@@ -51,13 +51,13 @@ type FormStatus = "idle" | "sending" | "success" | "error";
 // Apps Script does not send CORS headers, so the browser cannot read its reply.
 // We send a simple form-encoded POST (no-cors): it reaches the script, and we only
 // report failure when the request itself cannot be sent (e.g. no connection).
-async function sendQuoteRequest(form: HTMLFormElement): Promise<boolean> {
+async function sendQuoteRequest(form: HTMLFormElement, endpoint: string): Promise<boolean> {
   const data = new URLSearchParams();
   new FormData(form).forEach((value, key) => {
     if (typeof value === "string") data.append(key, value);
   });
   try {
-    await fetch(CONTACT.formEndpoint, { method: "POST", mode: "no-cors", body: data });
+    await fetch(endpoint, { method: "POST", mode: "no-cors", body: data });
     return true;
   } catch {
     return false;
@@ -65,9 +65,10 @@ async function sendQuoteRequest(form: HTMLFormElement): Promise<boolean> {
 }
 
 function Contact() {
+  const { company, units } = useContent();
   const [unit, setUnit] = useState(0);
   const [status, setStatus] = useState<FormStatus>("idle");
-  const active = UNITS[unit] ?? UNITS[0]!;
+  const active = units[unit] ?? units[0]!;
   return (
     <>
       <PageHero eyebrow="Contact" title="Let's talk steel" intro="Tell us what you need fabricated and we'll come back with a quote." image={"/jak/slides/slide-2.jpg"} />
@@ -82,7 +83,7 @@ function Contact() {
               e.preventDefault();
               const form = e.currentTarget;
               setStatus("sending");
-              const ok = await sendQuoteRequest(form);
+              const ok = await sendQuoteRequest(form, company.formEndpoint);
               if (ok) {
                 form.reset();
                 setStatus("success");
@@ -111,7 +112,7 @@ function Contact() {
               {status === "success" && <span className="text-primary">Thank you. Your request has been sent and we will reply within a working day.</span>}
               {status === "error" && (
                 <span className="text-destructive">
-                  Sorry, your request could not be sent. Please try again or call {CONTACT.phoneMobile}.
+                  Sorry, your request could not be sent. Please try again or call {company.phoneMobile}.
                 </span>
               )}
             </p>
@@ -124,22 +125,22 @@ function Contact() {
               <div className="eyebrow">Registered office</div>
               <p className="mt-5 flex gap-3 text-lg">
                 <MapPin className="mt-1 h-5 w-5 shrink-0 text-primary" />
-                <span>{CONTACT.office.map((l) => <span key={l} className="block">{l}</span>)}</span>
+                <span>{company.office.map((l) => <span key={l} className="block">{l}</span>)}</span>
               </p>
             </div>
           </Reveal>
           <div className="grid gap-5 sm:grid-cols-2">
             <Reveal delay={0.1}>
-              <a href={CONTACT.phoneMobileHref} className="group block rounded-3xl border border-border bg-card p-8 transition-colors hover:border-primary">
+              <a href={telHref(company.phoneMobile)} className="group block rounded-3xl border border-border bg-card p-8 transition-colors hover:border-primary">
                 <Phone className="h-6 w-6 text-primary" />
-                <div className="mt-6 font-display text-xl font-semibold">{CONTACT.phoneMobile}</div>
-                <div className="mt-1 text-sm text-muted-foreground">Office {CONTACT.phoneOffice}</div>
+                <div className="mt-6 font-display text-xl font-semibold">{company.phoneMobile}</div>
+                <div className="mt-1 text-sm text-muted-foreground">Office {company.phoneOffice}</div>
               </a>
             </Reveal>
             <Reveal delay={0.2}>
-              <a href={`mailto:${CONTACT.email}`} className="group block rounded-3xl border border-border bg-card p-8 transition-colors hover:border-primary">
+              <a href={`mailto:${company.email}`} className="group block rounded-3xl border border-border bg-card p-8 transition-colors hover:border-primary">
                 <Mail className="h-6 w-6 text-primary" />
-                <div className="mt-6 break-all font-display text-base font-semibold">{CONTACT.email}</div>
+                <div className="mt-6 break-all font-display text-base font-semibold">{company.email}</div>
                 <div className="mt-1 text-sm text-muted-foreground">We reply within a working day</div>
               </a>
             </Reveal>
@@ -153,7 +154,7 @@ function Contact() {
           <SplitText as="h2" text="Find us on the map" className="mt-6 block text-4xl font-semibold md:text-6xl" />
           <div className="mt-12 grid gap-8 lg:grid-cols-12">
             <div className="space-y-3 lg:col-span-5">
-              {UNITS.map((u, i) => (
+              {units.map((u, i) => (
                 <button
                   key={u.name}
                   type="button"

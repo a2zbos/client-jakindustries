@@ -6,7 +6,7 @@ import { PageHero } from "@/components/site/PageHero";
 import { Reveal, SectionLabel, SplitText } from "@/components/site/motion";
 import { CTA } from "@/components/site/sections";
 import { Lightbox } from "@/components/site/Lightbox";
-import { ISO_CERTS, LADCO_CERTS, WPS } from "@/lib/site-data";
+import { useContent } from "@/lib/content";
 
 export const Route = createFileRoute("/certifications")({
   head: () => ({
@@ -53,6 +53,7 @@ function FlipCert({ code, title, image, onOpen, layoutId }: { code: string; titl
 }
 
 function Certifications() {
+  const { isoCerts, ladcoCerts, wps } = useContent();
   const [isoOpen, setIsoOpen] = useState<number | null>(null);
   const [ladcoOpen, setLadcoOpen] = useState<number | null>(null);
   return (
@@ -69,7 +70,7 @@ function Certifications() {
         <SplitText as="h2" text="Certified by KVQA and Intertek" className="mt-6 block text-4xl font-semibold md:text-6xl" />
         <p className="mt-4 text-sm text-muted-foreground">Hover to flip · click to open</p>
         <div className="mt-14 grid gap-8 md:grid-cols-3">
-          {ISO_CERTS.map((c, i) => (
+          {isoCerts.map((c, i) => (
             <Reveal key={c.code} delay={i * 0.12}>
               <FlipCert {...c} layoutId={`iso-${i}`} onOpen={() => setIsoOpen(i)} />
             </Reveal>
@@ -81,13 +82,13 @@ function Certifications() {
         <div className="mx-auto grid max-w-[1440px] gap-14 px-5 md:grid-cols-12 md:px-10">
           <div className="md:col-span-4">
             <SectionLabel index="02">Welding procedures</SectionLabel>
-            <SplitText as="h2" text="10 qualified WPS" className="mt-6 block text-4xl font-semibold md:text-6xl" />
+            <SplitText as="h2" text={`${wps.length} qualified WPS`} className="mt-6 block text-4xl font-semibold md:text-6xl" />
             <Reveal delay={0.1}>
               <p className="mt-6 text-muted-foreground">GMAW and SMAW procedures for plate, pipe, butt, tee and fillet joints.</p>
             </Reveal>
           </div>
           <ol className="grid gap-3 md:col-span-8 md:grid-cols-2">
-            {WPS.map((w, i) => (
+            {wps.map((w, i) => (
               <motion.li
                 key={w}
                 initial={{ opacity: 0, rotateX: -80, y: 30 }}
@@ -109,7 +110,7 @@ function Certifications() {
         <SectionLabel index="03">LADCO certificates</SectionLabel>
         <SplitText as="h2" text="Our galvanizing arm, certified too" className="mt-6 block text-4xl font-semibold md:text-6xl" />
         <div className="mt-14 grid gap-8 md:grid-cols-3">
-          {LADCO_CERTS.map((c, i) => (
+          {ladcoCerts.map((c, i) => (
             <Reveal key={c.code} delay={i * 0.12}>
               <FlipCert {...c} layoutId={`ladcocert-${i}`} onOpen={() => setLadcoOpen(i)} />
             </Reveal>
@@ -117,8 +118,8 @@ function Certifications() {
         </div>
       </section>
 
-      <Lightbox items={ISO_CERTS.map((c) => ({ src: c.image, caption: `${c.code}: ${c.title}` }))} index={isoOpen} onChange={setIsoOpen} group="iso" />
-      <Lightbox items={LADCO_CERTS.map((c) => ({ src: c.image, caption: `${c.code}: ${c.title}` }))} index={ladcoOpen} onChange={setLadcoOpen} group="ladcocert" />
+      <Lightbox items={isoCerts.map((c) => ({ src: c.image, caption: `${c.code}: ${c.title}` }))} index={isoOpen} onChange={setIsoOpen} group="iso" />
+      <Lightbox items={ladcoCerts.map((c) => ({ src: c.image, caption: `${c.code}: ${c.title}` }))} index={ladcoOpen} onChange={setLadcoOpen} group="ladcocert" />
       <CTA title="Certified quality, on every order." kicker="Audit-ready" />
     </>
   );

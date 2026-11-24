@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
   type ErrorComponentProps,
@@ -15,6 +16,7 @@ import { MotionConfig } from "framer-motion";
 import appCss from "../styles.css?url";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
+import { AnnouncementBar } from "@/components/site/AnnouncementBar";
 import {
   Cursor,
   PageEnter,
@@ -23,6 +25,9 @@ import {
   ScrollProgress,
   SmoothScroll,
 } from "@/components/site/Transitions";
+import { Toaster } from "@/components/ui/sonner";
+import { ContentProvider } from "@/lib/content";
+import { getSiteContent } from "@/lib/content.functions";
 
 const SITE_URL = "https://jakindustries.net";
 
@@ -147,6 +152,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", type: "image/png", href: "/favicon.png" },
     ],
   }),
+  loader: () => getSiteContent(),
+  staleTime: 60_000,
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
@@ -176,23 +183,39 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const content = Route.useLoaderData();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const isAdmin = pathname.startsWith("/admin");
 
   return (
     <QueryClientProvider client={queryClient}>
       <MotionConfig reducedMotion="user">
-        <SmoothScroll />
-        <ScrollProgress />
-        <Preloader />
-        <RouteCurtain />
-        <Cursor />
-        <Header />
-        <main>
-          <PageEnter>
-            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-            <Outlet />
-          </PageEnter>
-        </main>
-        <Footer />
+        <ContentProvider value={content}>
+          {isAdmin ? (
+            // Admin has its own layout: no public header, footer or motion shell.
+            <>
+              <Outlet />
+              <Toaster />
+            </>
+          ) : (
+            <>
+              <SmoothScroll />
+              <ScrollProgress />
+              <Preloader />
+              <RouteCurtain />
+              <Cursor />
+              <Header />
+              <main>
+                <PageEnter>
+                  {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+                  <Outlet />
+                </PageEnter>
+              </main>
+              <Footer />
+              <AnnouncementBar />
+            </>
+          )}
+        </ContentProvider>
       </MotionConfig>
     </QueryClientProvider>
   );

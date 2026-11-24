@@ -8,7 +8,8 @@ import { TurbineCanvas } from "@/components/site/Scenes";
 import { CapabilityArt } from "@/components/site/CapabilityArt";
 import { Counter, Magnetic, ParallaxImage, Reveal, SectionLabel, SplitText, TiltCard } from "@/components/site/motion";
 import { ClientMarquee, CTA, HorizontalScroll, ScrollHighlight, TextMarquee } from "@/components/site/sections";
-import { CAPABILITIES, HERO_SLIDES, PROMISES, STATS } from "@/lib/site-data";
+import { CAPABILITIES, HERO_SLIDES, PROMISES } from "@/lib/site-data";
+import { useContent } from "@/lib/content";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -131,6 +132,7 @@ const DIVISIONS = [
 ];
 
 function Home() {
+  const { stats } = useContent();
   return (
     <>
       <Hero />
@@ -156,10 +158,10 @@ function Home() {
       {/* Stats */}
       <section className="border-y border-border">
         <div className="mx-auto grid max-w-[1440px] grid-cols-2 md:grid-cols-4">
-          {STATS.map((s, idx) => (
+          {stats.map((s, idx) => (
             <Reveal key={s.label} delay={idx * 0.1} className="border-border p-8 md:p-12 [&:not(:last-child)]:border-r">
               <div className="font-display text-5xl font-semibold text-foreground md:text-7xl">
-                <Counter to={s.value} suffix={s.suffix} plain={"plain" in s && s.plain} />
+                <Counter to={s.value} suffix={s.suffix} plain={s.plain ?? false} />
               </div>
               <div className="mt-3 text-sm text-muted-foreground">{s.label}</div>
             </Reveal>

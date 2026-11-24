@@ -6,7 +6,7 @@ import { PageHero } from "@/components/site/PageHero";
 import { Reveal, SectionLabel, SplitText } from "@/components/site/motion";
 import { CTA, ScrollHighlight } from "@/components/site/sections";
 import { Lightbox } from "@/components/site/Lightbox";
-import { CSR_ACTIVITIES, CSR_GALLERY } from "@/lib/site-data";
+import { useContent } from "@/lib/content";
 
 export const Route = createFileRoute("/csr")({
   head: () => ({
@@ -57,13 +57,14 @@ function Column({ items, offset, y, onOpen }: { items: Array<{ src: string; capt
 }
 
 function CSR() {
+  const { csrActivities, csrGallery } = useContent();
   const [open, setOpen] = useState<number | null>(null);
   const gallery = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: gallery, offset: ["start end", "end start"] });
   const y1 = useTransform(scrollYProgress, [0, 1], ["0%", "-12%"]);
   const y2 = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
   const y3 = useTransform(scrollYProgress, [0, 1], ["0%", "-18%"]);
-  const indexed = CSR_GALLERY.map((g, i) => ({ ...g, i }));
+  const indexed = csrGallery.map((g, i) => ({ ...g, i }));
   const cols = [0, 1, 2].map((c) => indexed.filter((_, i) => i % 3 === c));
   const ys = [y1, y2, y3];
 
@@ -87,7 +88,7 @@ function CSR() {
       <section className="mx-auto max-w-[1440px] px-5 pb-28 md:px-10">
         <SectionLabel index="02">Our CSR activities</SectionLabel>
         <div className="mt-12 grid gap-4 md:grid-cols-3">
-          {CSR_ACTIVITIES.map((a, i) => (
+          {csrActivities.map((a, i) => (
             <Reveal key={a} delay={(i % 3) * 0.1}>
               <div className="group h-full rounded-2xl border border-border bg-card p-6 transition-colors duration-500 hover:border-primary/60">
                 <div className="flex items-center justify-between">
@@ -103,7 +104,7 @@ function CSR() {
 
       <section ref={gallery} className="mx-auto max-w-[1440px] overflow-hidden px-5 pb-28 md:px-10">
         <SectionLabel index="03">In action</SectionLabel>
-        <SplitText as="h2" text={`${CSR_GALLERY.length} projects, one community`} className="mt-6 block text-4xl font-semibold md:text-6xl" />
+        <SplitText as="h2" text={`${csrGallery.length} projects, one community`} className="mt-6 block text-4xl font-semibold md:text-6xl" />
         <div className="mt-14 hidden grid-cols-3 gap-5 md:grid">
           {cols.map((items, c) => (
             <Column key={c} items={items} offset={c} y={ys[c] ?? y1} onOpen={setOpen} />
@@ -118,7 +119,7 @@ function CSR() {
         </div>
       </section>
 
-      <Lightbox items={CSR_GALLERY} index={open} onChange={setOpen} group="csr" />
+      <Lightbox items={csrGallery} index={open} onChange={setOpen} group="csr" />
       <CTA title="Partner with a company that gives back." kicker="Together" />
     </>
   );

@@ -6,7 +6,7 @@ import { PageHero } from "@/components/site/PageHero";
 import { Reveal, SectionLabel, SplitText, TiltCard, WipeImage } from "@/components/site/motion";
 import { CTA } from "@/components/site/sections";
 import { Lightbox } from "@/components/site/Lightbox";
-import { LADCO_CERTS } from "@/lib/site-data";
+import { useContent } from "@/lib/content";
 
 export const Route = createFileRoute("/ladco")({
   head: () => ({
@@ -68,8 +68,9 @@ function ZincBath() {
 }
 
 function Ladco() {
+  const { ladcoCerts } = useContent();
   const [open, setOpen] = useState<number | null>(null);
-  const items = LADCO_CERTS.map((c) => ({ src: c.image, caption: `${c.code}: ${c.title}` }));
+  const items = ladcoCerts.map((c) => ({ src: c.image, caption: `${c.code}: ${c.title}` }));
   return (
     <>
       <PageHero
@@ -130,7 +131,7 @@ function Ladco() {
           <SectionLabel index="03">LADCO certificates</SectionLabel>
           <SplitText as="h2" text="Certified, end to end" className="mt-6 block text-4xl font-semibold md:text-6xl" />
           <div className="mt-14 grid gap-6 md:grid-cols-3">
-            {LADCO_CERTS.map((c, i) => (
+            {ladcoCerts.map((c, i) => (
               <Reveal key={c.code} delay={i * 0.1}>
                 <motion.button layoutId={`ladco-${i}`} type="button" onClick={() => setOpen(i)} className="block w-full text-left">
                   <TiltCard className="overflow-hidden rounded-2xl border border-border bg-paper" max={12}>

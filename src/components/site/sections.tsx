@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { CLIENTS } from "@/lib/site-data";
+import { useContent } from "@/lib/content";
 import { Magnetic } from "./motion";
 import { cn } from "@/lib/utils";
 
@@ -34,7 +34,8 @@ function Word({ children, progress, range }: { children: ReactNode; progress: Mo
 
 /** Infinite logo marquee of customers. */
 export function ClientMarquee({ reverse = false }: { reverse?: boolean }) {
-  const list = reverse ? [...CLIENTS].reverse() : CLIENTS;
+  const { clients } = useContent();
+  const list = reverse ? [...clients].reverse() : clients;
   return (
     <div className="group relative flex overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_12%,black_88%,transparent)]">
       <div className={cn("flex w-max shrink-0 gap-4 pr-4 group-hover:[animation-play-state:paused]", reverse ? "animate-marquee-reverse" : "animate-marquee")}>
